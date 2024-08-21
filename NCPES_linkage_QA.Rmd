@@ -1,0 +1,38 @@
+---
+title: "NCPES linkage QA"
+author: "Lizzie Augarde"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+
+```{r cars}
+check for any matching NHS numbers without merge ==1
+
+
+check for any matching ICD-10 4 and 3 digit codes without FLAG == 1
+
+
+##############need a check if patients have been counted twice in both ICD10 flags using UNIQue_IDx flags
+CPES_RESPONDENTS    <- CPES_RESPONDENTS %>% mutate(CHECK_FLAG = ifelse(!is.na(UNIQue_IDx) & !is.na(UNIQue_IDx2), 1, 0))
+CPES_NONRESPONDENTS <- CPES_NONRESPONDENTS %>% mutate(CHECK_FLAG = ifelse(!is.na(UNIQue_IDx) & !is.na(UNIQue_IDx2), 1, 0))
+
+# No observations means that no patient has been counted twice using these IDs (only an ID in one or the other not both)
+table(CPES_RESPONDENTS$CHECK_FLAG   , useNA="always")
+table(CPES_NONRESPONDENTS$CHECK_FLAG, useNA="always")
+
+
+
+cat("Of", nrow(CPES_RESPONDENTS), "observations", table(CPES_RESPONDENTS$FLAGICD104, CPES_RESPONDENTS$FLAGICD103 )["0","0"],"do not match on either 3 digit and 4 digit, the rest match on either 3 digit only",table(CPES_RESPONDENTS$FLAGICD103)["1"], "or 4 digit", table(CPES_RESPONDENTS$FLAGICD104)["1"],".")
+
+cat("Of", nrow(CPES_RESPONDENTS), "observations", sum(ifelse(is.na(CPES_RESPONDENTS$TUMOUR_LINKFLAG_COMBINED),1,0)), "are missing due to having no match on NHS number or having no NHS number,", table(CPES_RESPONDENTS$TUMOUR_LINKFLAG_COMBINED)["1"],"match by tumour (either 3 digit or 4 digit) and",table(CPES_RESPONDENTS$TUMOUR_LINKFLAG_COMBINED)["0"],"do not match by tumour.")
+
+
+```
+
