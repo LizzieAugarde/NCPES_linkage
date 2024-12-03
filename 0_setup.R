@@ -9,13 +9,13 @@ library(dplyr)
 
 
 # step 1 - inputs 
-year <- dlgInput("What year of NCPES data are you linking? YYYY", Sys.info()["year"])$res
-cas_snapshot <- dlgInput("Which CAS snapshot are you linking to? Format should be 'cas2XXX'")$res
+year <- dlgInput("What year of NCPES data are you linking? YYYY")$res
+cas_snapshot <- dlgInput("Which CAS snapshot are you linking to? Format should be like 'cas2408'")$res
 analyst <- dlgInput("What is your CAS username? Format should be 'analysisfirstnamesurname'")$res
 
 
 # step 2 - creating a folder for this year's linkage outputs  
-dir.create(paste0(ncpes_linkage_drive, "/Linkage ", year))
+dir.create(paste0(Sys.getenv("ncpes_linkage_drive"), "/Linkage ", year))
 
 
 # step 3 - CAS connection

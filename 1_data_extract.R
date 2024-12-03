@@ -4,22 +4,22 @@
 
 ##### step 1 - SQL extracts
 resps_query <- paste0("select * from CPES.NC_", year, "_RESPONDENTS@CASREF01 c
-                      left outer join ANALYSISNCR.AT_TUMOUR_ENGLAND@CAS", cas_snapshot,
+                      left outer join ANALYSISNCR.AT_TUMOUR_ENGLAND@", cas_snapshot,
                       " t on replace(to_char(c.CPES_NHS_NUMBER), ' ', '') = t.NHSNUMBER
                       order by c.CPES_NHS_NUMBER")
 
 nonresps_query <- paste0("select * from CPES.NC_", year, "_NONRESPONDENTS@CASREF01 c
-                         left outer join ANALYSISNCR.AT_TUMOUR_ENGLAND@CAS", cas_snapshot,
+                         left outer join ANALYSISNCR.AT_TUMOUR_ENGLAND@", cas_snapshot,
                          " t on replace(to_char(c.CPES_NHS_NUMBER), ' ', '') = t.NHSNUMBER
                          order by c.CPES_NHS_NUMBER")
 
 u16_resps_query <- paste0("select * from CPES.NC_U16_", year, "_RESPONDENTS@CASREF01 c
-                          left outer join ANALYSISNCR.AT_TUMOUR_ENGLAND@CAS", cas_snapshot,
+                          left outer join ANALYSISNCR.AT_TUMOUR_ENGLAND@", cas_snapshot,
                           " t on replace(to_char(c.CPES_NHS_NUMBER), ' ', '') = t.NHSNUMBER
                           order by c.CPES_NHS_NUMBER")
 
 u16_nonresps_query <- paste0("select * from CPES.NC_U16_", year, "_NONRESPONDENTS@CASREF01 c
-                             left outer join ANALYSISNCR.AT_TUMOUR_ENGLAND@CAS", cas_snapshot,
+                             left outer join ANALYSISNCR.AT_TUMOUR_ENGLAND@", cas_snapshot,
                              " t on replace(to_char(c.CPES_NHS_NUMBER), ' ', '') = t.NHSNUMBER
                              order by c.CPES_NHS_NUMBER")
 
@@ -32,7 +32,7 @@ u16_nonresps_raw <- dbGetQueryOracle(cas, u16_nonresps_query)
 ##### step 2 - save a copy of raw data
 timestamp <- format(Sys.time(), "%Y%m%d_%H%M%S")
 
-adult_excel_file_name <- paste0("CPES_CAS_LINKED_EXTRACT", timestamp, ".xlsx")
+adult_excel_file_name <- paste0(ncpes_linkage_drive, "/Linkage ", year, "/CPES_CAS_LINKED_EXTRACT", timestamp, ".xlsx")
 u16_excel_file_name <- paste0("CPES_U16_CAS_LINKED_EXTRACT", timestamp, ".xlsx")
 
 write.xlsx(list(Respondents = resps_raw, Nonrespondents = nonresps_raw), 
