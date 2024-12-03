@@ -9,25 +9,24 @@ This project is in development. The code will be actively maintained annually by
 
 
 Point of contact: 
-Lizzie Augarde elizabeth.augarde2@nhs.net
+Claire Welsh claire.welsh8@nhs.net and Sophie Jose sophie.jose@nhs.net
 
 
 Data requirements: 
-- raw anonymised NCPES England data. This is supplied to the NHS England Insight and Voice Team by the survey provider, Picker. The Insight and Voice Team 
-QA the data and send it to NDRS. The data are uploaded to CAS by NDRS developers. 
+- raw anonymised NCPES England data. This is supplied to the NHS England Insight and Voice Team by the survey provider, Picker. The Insight and Voice Team QA the data and send it to NDRS. The data are uploaded to CAS by NDRS developers. 
 - cancer registry data. The project uses a CAS snapshot, with the timing to be determined by the analyst(s) completing the linkage. 
 
 
 Outputs: 
-The project produces a table of linkage fields which should be uploaded into the CPES schema on CAS by NDRS developers, along with the raw NCPES data. All analysts with Level2 CAS access should be given access to both tables. 
+The project produces a table of linkage fields which should be uploaded into the CPES schema on CAS by NDRS developers, along with the raw NCPES data. All analysts with Level2 CAS access should be given access to both tables once they are uploaded and the upload has been checked. 
 
 
 Prerequisites:
-- access to the raw NCPES data uploaded to CAS by NDRS developers. This requires being added to the CPESTEST user group.
+Access to the raw NCPES data uploaded to CAS by NDRS developers. This requires being added to the CPESTEST user group.
 
 
 How to install and use:
-Clone the Github repo and run the scripts in numerical order TBC
+Clone the Github repo and run the scripts in numerical order
 
 
 License:
@@ -35,4 +34,9 @@ MIT (see license file)
 
 
 Other legal or regulatory requirements:
-TBC
+None
+
+Other notes:
+For certain tumours a more stringent rule in terms of time between diagnosis and discharge is necessary given the large variance across this group. These cases are considered a match if the time between diagnosis and discharge was within the mean time frame for the most relevant tumour.  So for instance, the average length of time between diagnosis and discharge among matched breast cancer patients was 546 days in 2010 (considering just the positive time interval values). Therefore, cases that were coded ‘C50’ in CPES and ‘D05’ in the AT_TUMOUR_ENGLAND, and vice-versa, with a time difference from diagnosis and discharge date between -30 days and 546 days were considered a related match and flagged. This flag variable is called ‘FLAG_RELATED_MATCH’ and this process is applied in 5_non_matched.R.
+
+The same applies to colorectal tumours, but these are grouped together before the mean difference between diagnosis and discharge is identified, also in 5_non_matched.R.
