@@ -22,6 +22,8 @@ flag2 <- function(x) {
                                 MERGE == 0 ~ 9999))
 }
 
+dataset_list <- lapply(dataset_list, flag2)
+
 
 ##### step 3 - final flag which is 0 if there is only row for a patient, otherwise records number of rows for the patient
 flag3 <- function(x) {
@@ -32,6 +34,9 @@ flag3 <- function(x) {
     ungroup() 
 }
 
+dataset_list <- lapply(dataset_list, flag3)
+
+
 ##### step 4 - replace the final flag
 flag4 <- function(x) {
   x |>
@@ -41,6 +46,9 @@ flag4 <- function(x) {
     mutate(FINAL_UNIQUE = ifelse(MERGE == 0, 99, FINAL_UNIQUE))
 }
 
+dataset_list <- lapply(dataset_list, flag4)
+
+
 ##### step 5 - flagging and cleaning the non-matched records
 flag5 <- function(x) {
   x |>
@@ -49,14 +57,17 @@ flag5 <- function(x) {
                                   levels = c(0,1)))
 }
 
+dataset_list <- lapply(dataset_list, flag5)
+
+
 ##### step 6 - creating a count of rows by NHS number
-flag5 <- function(x) {
+flag6 <- function(x) {
   x |>
     group_by(AVTUM_NHSNUMBER) |>
     mutate(rowcount = ave(AVTUM_NHSNUMBER, AVTUM_NHSNUMBER, fun = length)) |>
     arrange(AVTUM_NHSNUMBER) |>
     mutate(SERIALNOTMATCH = ifelse(row_number() == 1 & rowcount == 1, 0, row_number()))
 }
+
+dataset_list <- lapply(dataset_list, flag6)
   
-  
-}

@@ -8,7 +8,7 @@ library(tidyverse)
 library(dplyr)
 
 # put the NCPES linkage filepath into your renviron
-year <- dlgInput("what year of NCPES data are you linking? YYYY", Sys.info()["year"])$res
+year <- dlgInput("What year of NCPES data are you linking? YYYY", Sys.info()["year"])$res
 
 
 # put inputs into the inputs.csv file in the folder
