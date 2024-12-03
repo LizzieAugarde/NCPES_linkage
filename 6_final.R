@@ -4,19 +4,23 @@
 
 ##### step 1 - dropping variables and capitalising
 drop_vars <- function(x) {
-  x |>
-    subset(x, select = c(CPES_PRN, CPES_TRUST_CODE, ATTUM_PATIENTID, 
-                         ATTUM_TUMOURID, MERGE, FLAGICD104, FLAGICD103, 
-                         TUMOUR_LINKFLAG_COMBINED, DIFFDIAGDISCH, PATMATCH, 
-                         FINAL_UNIQUE, FLAG_RELATED_MATCH, 
-                         FLAG_RELATED_MATCH_UNIQ, FINAL_UNIQUE_EXTRA))
+  x <- x |>
+    select(c("CPES_PRN", "CPES_TRUST_CODE", "ATTUM_PATIENTID", 
+                         "ATTUM_TUMOURID", "MERGE", "FLAGICD104", "FLAGICD103", 
+                         "TUMOUR_LINKFLAG_COMBINED", "DIFFDIAGDISCH", "PATMATCH", 
+                         "FINAL_UNIQUE", "FLAG_RELATED_MATCH", 
+                         "FLAG_RELATED_MATCH_UNIQ", "FINAL_UNIQUE_EXTRA"))
 }
+
+dataset_list <- lapply(dataset_list, drop_vars)
 
 
 ##### step 2 - capitalise variable names 
 capitalise <- function(x) {
   names(x) <- toupper(names(x))
 }
+
+dataset_list <- lapply(dataset_list, capitalise)
 
 
 ##### step 3- extract the data frames from the dataset list for write out

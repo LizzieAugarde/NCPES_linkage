@@ -56,7 +56,7 @@ limit_cols <- function(x) {
                   "SITE_ICD10", "SITE_ICD10_3CHAR", "NHSNUMBER", "DIAGNOSISYEAR",
                   "DIAGNOSISDATEBEST", "CPES_YEAR_OF_DISCHARGE", 
                   "CPES_MONTH_OF_DISCHARGE", "CPES_DAY_OF_DISCHARGE",
-                  "CPES_ICD10", "CPES_ICD10_3CODE")
+                  "CPES_ICD10", "CPES_ICD10_3CODE", "PATIENTID", "TUMOURID", "CPES_TRUST_CODE")
   
   x |> select(all_of(cols_to_keep))
 }

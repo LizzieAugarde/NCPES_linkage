@@ -100,7 +100,7 @@ flagged_tumours_rule <- function(x, mean_table, colorectal_mean) {
   c83_mean <- ifelse(length(mean_table$DIFFDIAGDISCH[mean_table$ICD_COMBINED == "C83"]) == 0 || is.null(mean_table$DIFFDIAGDISCH[mean_table$ICD_COMBINED == "C83"]), NA, 
                      mean_table$DIFFDIAGDISCH[mean_table$ICD_COMBINED == "C83"])
   
-  x |>
+  x <- x |>
     mutate(FLAG_RELATED_MATCH = case_when(
     
     #bladder
@@ -186,7 +186,7 @@ dataset_list <- list(resps_raw = resps_raw,
 unequal_tums_dups <- function(x) {
   x |>
     group_by(ATTUM_NHSNUMBER, FLAG_RELATED_MATCH) |>
-    mutate(MININTERV2 = ifelse(FLAG_RELATED_MATCH == 1 & !all(is.na(DIFF)), min(DIFF, na.rm = TRUE), NA)) |>
+    mutate(MININTERV2 = ifelse(FLAG_RELATED_MATCH == 1 & !all(is.na(DIFF_CHECK)), min(DIFF_CHECK, na.rm = TRUE), NA)) |>
     ungroup() |>
     mutate(FLAG_RELATED_MATCH_UNIQ = ifelse(DIFFDIAGDISCH == MININTERV2, 1, 0)) |>
     mutate(FLAG_RELATED_MATCH_UNIQ = ifelse(is.na(FLAG_RELATED_MATCH_UNIQ), 0, FLAG_RELATED_MATCH_UNIQ)) |>
