@@ -146,3 +146,27 @@ flagged_tumours_rule <- function(x) {
 
 
 dataset_list <- lapply(dataset_list, flagged_tumours_rule)
+
+
+##### step 8 - cleaning duplicates, unique observations of unequal tumours which could be matched
+unequal_tums_dups <- function(x) {
+  x |>
+    group_by(ATTUM_NHSNUMBER, FLAG_RELATED_MATCH) |>
+    mutate(MININTERV2 = ifelse(FLAG_RELATED_MATCH == 1 & !all(is.na(DIFF)), min(DIFF, na.rm = TRUE), NA)) |>
+    ungroup() |>
+    mutate(FLAG_RELATED_MATCH_UNIQ = ifelse(DIFFDIAGDISCH == MININTERV2, 1, 0)) |>
+    mutate(FLAG_RELATED_MATCH_UNIQ = ifelse(is.na(FLAG_RELATED_MATCH_UNIQ), 0, FLAG_RELATED_MATCH_UNIQ)) |>
+    mutate(FLAG_RELATED_MATCH_UNIQ = ifelse(is.na(DIFFDIAGDISCH), NA, FLAG_RELATED_MATCH_UNIQ))
+}
+
+dataset_list <- lapply(dataset_list, unequal_tums_dups)
+
+
+##### step 9 - flagging unequal but matched ICD-10 codes to increase yield
+#similar to final_unique variable, but with increased yield from adding the unequal but matched ICD-10 code patients
+unequal_tums_flag <- function(x) {
+  x |>
+    mutate(FINAL_UNIQUE_EXTRA = ifelse(FLAG_RELATED_MATCH_UNIQ == 1,1, FINAL_UNIQUE)) |>
+    mutate(FINAL_UNIQUE_EXTRA = ifelse(!is.na(FINAL_UNIQUE_EXTRA), FINAL_UNIQUE_EXTRA, 99))
+}
+
