@@ -79,5 +79,14 @@ rename_cols <- function(x) {
 dataset_list <- lapply(dataset_list, rename_cols)
 
 
-##### step 5 - extract data frames from list
+##### step 5 - remove spaces in NHS numbers in CPES data
+remove_spaces <- function(x) {
+  x |> 
+    mutate(CPES_NHS_NUMBER = gsub(" ", "", CPES_NHS_NUMBER))
+}
+
+dataset_list <- lapply(dataset_list, remove_spaces)
+
+
+##### step 6 - extract data frames from list
 dfs_from_list(dataset_list)
