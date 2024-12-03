@@ -21,6 +21,7 @@ analyst <- inputvalues[inputvalues$input == "cas_username", 2]
 # CAS connection
 cas <- createConnection(username = analyst, port = 1525, sid = paste0("cas", cas_snapshot))
 
+
 # Function to extract data frames from list 
 dfs_from_list <- function(dataset_list) {
   for (name in names(dataset_list)) {
