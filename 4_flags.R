@@ -3,6 +3,7 @@
 ## 4. Flags
 
 ##### step 1 - flagging patients matched on NHS number and most recent tumour ICD-10 code (4 or 3 digit)
+# If two tumour ids have same mininterval (ie same diagnosis and discharge dates) then there will be duplicates
 flag1 <- function(x) {
   x |>
     group_by(ATTUM_NHSNUMBER, MININTERVFLAG) |>
@@ -13,7 +14,6 @@ flag1 <- function(x) {
 }
 
 dataset_list <- lapply(dataset_list, flag1)
-# If two tumour ids have same mininterval (ie same diagnosis and discharge dates) then there will be duplicates
 
  
 ##### step 2 - flag which is 1 if DUPAVNHSFINAL is not empty and if there is a tumour match
