@@ -5,23 +5,23 @@
 ##### step 1 - SQL extracts
 resps_query <- paste0("select * from CPES.NC_", year, "_RESPONDENTS@CASREF01 c
                       left outer join ANALYSISNCR.AT_TUMOUR_ENGLAND@CAS", cas_snapshot,
-                      " t on to_char(c.CPES_NHS_NUMBER) = t.NHSNUMBER order by 
-                      c.CPES_NHS_NUMBER")
+                      " t on replace(to_char(c.CPES_NHS_NUMBER), ' ', '') = t.NHSNUMBER
+                      order by c.CPES_NHS_NUMBER")
 
 nonresps_query <- paste0("select * from CPES.NC_", year, "_NONRESPONDENTS@CASREF01 c
                          left outer join ANALYSISNCR.AT_TUMOUR_ENGLAND@CAS", cas_snapshot,
-                         " t on to_char(c.CPES_NHS_NUMBER) = t.NHSNUMBER order by 
-                         c.CPES_NHS_NUMBER")
+                         " t on replace(to_char(c.CPES_NHS_NUMBER), ' ', '') = t.NHSNUMBER
+                         order by c.CPES_NHS_NUMBER")
 
 u16_resps_query <- paste0("select * from CPES.NC_U16_", year, "_RESPONDENTS@CASREF01 c
                           left outer join ANALYSISNCR.AT_TUMOUR_ENGLAND@CAS", cas_snapshot,
-                          " t on to_char(c.CPES_NHS_NUMBER) = t.NHSNUMBER order by 
-                          c.CPES_NHS_NUMBER") 
+                          " t on replace(to_char(c.CPES_NHS_NUMBER), ' ', '') = t.NHSNUMBER
+                          order by c.CPES_NHS_NUMBER")
 
 u16_nonresps_query <- paste0("select * from CPES.NC_U16_", year, "_NONRESPONDENTS@CASREF01 c
                              left outer join ANALYSISNCR.AT_TUMOUR_ENGLAND@CAS", cas_snapshot,
-                             " t on to_char(c.CPES_NHS_NUMBER) = t.NHSNUMBER order by 
-                             c.CPES_NHS_NUMBER")
+                             " t on replace(to_char(c.CPES_NHS_NUMBER), ' ', '') = t.NHSNUMBER
+                             order by c.CPES_NHS_NUMBER")
 
 resps_raw <- dbGetQueryOracle(cas, resps_query)
 nonresps_raw <- dbGetQueryOracle(cas, nonresps_query)
