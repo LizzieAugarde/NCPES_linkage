@@ -34,10 +34,10 @@ dataset_list <- lapply(dataset_list, count_unique_nhs)
 
 
 ##### step 3 - flag where patients were only non-tumour matched 
-count_unique_nhs <- function(x) {
+flag_non_tum_matched <- function(x) {
   x |>
     group_by(ATTUM_NHSNUMBER) |>
-    mutate(ONLY_NON_TUMOUR_MATCHED = ifelse(MISSINGUNIQUE =="Non-tumour matched" & (NHS2 == NHS1 | (is.na(NHS1) & is.na(NHS2))), 1,0))  
+    mutate(ONLY_NON_TUMOUR_MATCHED = ifelse(MISSINGUNIQUE =="Non-tumour matched" & (NHS2 == NHS1 | (is.na(NHS1) & is.na(NHS2))), 1, 0)) |>
     mutate(ONLY_NON_TUMOUR_MATCHED = ifelse(is.na(ONLY_NON_TUMOUR_MATCHED), 0, ONLY_NON_TUMOUR_MATCHED)) |>
     mutate(FLAG = sum(ONLY_NON_TUMOUR_MATCHED)) |>
     group_by(ATTUM_NHSNUMBER) |>
@@ -46,7 +46,7 @@ count_unique_nhs <- function(x) {
     mutate(ONLY_NON_TUMOUR_MATCHED = ifelse(FLAG > 1 & SERIALNOTMATCH > 1, NA, ONLY_NON_TUMOUR_MATCHED))
 }
 
-dataset_list <- lapply(dataset_list, count_unique_nhs)
+dataset_list <- lapply(dataset_list, flag_non_tum_matched)
 
 
 ##### step 4 - combining tumour site codes from pre- and post-2013
@@ -100,7 +100,7 @@ flagged_tumours_rule <- function(x, mean_table, colorectal_mean) {
   c83_mean <- ifelse(length(mean_table$DIFFDIAGDISCH[mean_table$ICD_COMBINED == "C83"]) == 0 || is.null(mean_table$DIFFDIAGDISCH[mean_table$ICD_COMBINED == "C83"]), NA, 
                      mean_table$DIFFDIAGDISCH[mean_table$ICD_COMBINED == "C83"])
   
-  x <- x |>
+  x |>
     mutate(FLAG_RELATED_MATCH = case_when(
     
     #bladder
@@ -169,11 +169,18 @@ flagged_tumours_rule <- function(x, mean_table, colorectal_mean) {
   return(x)
 }
 
+#7b run function 
+resps_raw <- flagged_tumours_rule(resps_raw, mean_diffdiagdisch_resp, colorectal_mean_resp)
+nonresps_raw <- flagged_tumours_rule(nonresps_raw, mean_diffdiagdisch_nonresp, colorectal_mean_nonresp)
+u16_resps_raw <- flagged_tumours_rule(u16_resps_raw, mean_diffdiagdisch_u16_resp, colorectal_mean_u16resp)
+u16_nonresps_raw <- flagged_tumours_rule(u16_nonresps_raw, mean_diffdiagdisch_u16_nonresp, colorectal_mean_u16nonresp)
 
-flagged_tumours_rule(resps_raw, mean_diffdiagdisch_resp, colorectal_mean_resp)
-flagged_tumours_rule(nonresps_raw, mean_diffdiagdisch_nonresp, colorectal_mean_nonresp)
-flagged_tumours_rule(u16_resps_raw, mean_diffdiagdisch_u16_resp, colorectal_mean_u16resp)
-flagged_tumours_rule(u16_nonresps_raw, mean_diffdiagdisch_u16_nonresp, colorectal_mean_u16nonresp)
+#7c recreate dataset list 
+dataset_list <- list(resps_raw = resps_raw, 
+                     nonresps_raw = nonresps_raw, 
+                     u16_resps_raw = u16_resps_raw, 
+                     u16_nonresps_raw = u16_nonresps_raw)
+
 
 ##### step 8 - cleaning duplicates, unique observations of unequal tumours which could be matched
 unequal_tums_dups <- function(x) {
