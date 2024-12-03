@@ -32,8 +32,8 @@ u16_nonresps_raw <- dbGetQueryOracle(cas, u16_nonresps_query)
 ##### step 2 - save a copy of raw data
 timestamp <- format(Sys.time(), "%Y%m%d_%H%M%S")
 
-adult_excel_file_name <- paste0(ncpes_linkage_drive, "/Linkage ", year, "/CPES_CAS_LINKED_EXTRACT", timestamp, ".xlsx")
-u16_excel_file_name <- paste0("CPES_U16_CAS_LINKED_EXTRACT", timestamp, ".xlsx")
+adult_excel_file_name <- paste0(Sys.getenv("ncpes_linkage_drive"), "/Linkage ", year, "/CPES_CAS_LINKED_EXTRACT", timestamp, ".xlsx")
+u16_excel_file_name <- paste0(Sys.getenv("ncpes_linkage_drive"), "/Linkage ", year, "/CPES_U16_CAS_LINKED_EXTRACT", timestamp, ".xlsx")
 
 write.xlsx(list(Respondents = resps_raw, Nonrespondents = nonresps_raw), 
            file = adult_excel_file_name, rowNames = FALSE)
