@@ -31,19 +31,6 @@ min_diag_disch_interval <- function(x) {
 dataset_list <- lapply(dataset_list, min_diag_disch_interval)
 
 
-###########  Making a variable for the minimum value of DIFFDIAGDISCH that is not negative
-# 
-# There were a number of patients that appeared to have been diagnosed after their discharge date,
-# with a large proportion of these patients being in the time window of 1-30 days after their
-# discharge. For this reason, patients who were diagnosed over 30 days after their
-# discharge date in the CPES dataset were not indicated as a match. This was applied to
-# help remove any records that were deemed ‘duplicates’ (by duplicate we mean records
-# that were identical for a patient on given variables of interest, and in this case a patient
-# that had two or more records that were a match in ICD-10 4-digit or 3-digit level), but also
-# to remove any record that matched, but had a date of diagnosis more than 30 days after
-# discharge to minimise the possibility of error. 
-
-
 
 
 

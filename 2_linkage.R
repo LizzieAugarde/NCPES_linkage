@@ -49,9 +49,9 @@ tumour_link_flag <- function(x) {
 dataset_list <- lapply(dataset_list, tumour_link_flag)
 
 
-##### step 5 - create IDs to count matches by ICD-10 4 and 3 digit codes, and unmatched ICD-10 codes
+##### step 5 - create IDs to count matches by ICD-10 4 and 3 digit codes, and unmatched ICD-10 codes NOT SURE OF PURPOSE OF THIS BIT
 #create a unique ID that counts number of unique NHS numbers for those patients that have a match on 4/3 digit ICD10 code 
-#(if there are duplicate NHS numbers the ID ID will be repeated for these subsequent rows)
+#(if there are duplicate NHS numbers the ID will be repeated for these subsequent rows)
 unique_ids <- function(x) {
   x |>
     mutate(UNIQUE_ID1 = ifelse(FLAGICD104 == 1, cur_group_id(), NA_integer_)) |>
