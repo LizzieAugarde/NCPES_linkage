@@ -2,6 +2,8 @@
 
 This project completes the linkage of NCPES England results to NDRS cancer registry data. The project generates a table of linkage fields for each survey respondent, for both the adult and under-16 survey. The linkage is completed annually. The raw NCPES data and linkage fields are uploaded to CAS for use by NDRS analysts and as a requestable dataset. 
 
+The development of this process was completed as part of the partnership between the National Cancer Registration and Analysis Service (NCRAS) in NDRS, and Macmillan Cancer Support. 
+
 Project status: 
 This project is in development. The code will be actively maintained annually by the analyst(s) completing the linkage. 
 
