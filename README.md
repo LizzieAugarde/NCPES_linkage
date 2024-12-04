@@ -24,7 +24,7 @@ Access to the raw NCPES data uploaded to CAS by NDRS developers. This requires b
 
 
 How to install and use:
-Clone the Github repo and run the scripts in numerical order
+Clone the Github repo and run the scripts in numerical order (see SOP for details)
 
 
 License:
