@@ -17,7 +17,8 @@ dataset_list <- lapply(dataset_list, drop_vars)
 
 ##### step 2 - capitalise variable names 
 capitalise <- function(x) {
-  names(x) <- toupper(names(x))
+  colnames(x) <- toupper(colnames(x))
+  return(x)
 }
 
 dataset_list <- lapply(dataset_list, capitalise)
@@ -28,7 +29,7 @@ dfs_from_list(dataset_list)
 
 
 ##### step 4 - write out 
-filepath <- paste0(Sys.getenv('ncpes_linkage_drive'), "_", year)
+filepath <- paste0(Sys.getenv('ncpes_linkage_drive'), "/Linkage ", year)
 
 resps_filename <- paste0("NC_", year, "_LINKAGE_RES_", cas_snapshot, ".xlsx")
 nonresps_filename <- paste0("NC_", year, "_LINKAGE_NONRES_", cas_snapshot, ".xlsx")

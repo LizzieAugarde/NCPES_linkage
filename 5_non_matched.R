@@ -83,8 +83,8 @@ mean_diffdiagdisch_u16_nonresp <- u16_nonresps_raw |>
 #6b colorectal mean (see README)
 colorectal_mean_resp <- mean(subset(resps_raw, FINAL_UNIQUE == 1 & DIFFDIAGDISCH >= 0 & ICD_COMBINED %in% c("C18", "C19", "C20"))$DIFFDIAGDISCH)
 colorectal_mean_nonresp <- mean(subset(nonresps_raw, FINAL_UNIQUE == 1 & DIFFDIAGDISCH >= 0 & ICD_COMBINED %in% c("C18", "C19", "C20"))$DIFFDIAGDISCH)
-colorectal_mean_u16_resp <- mean(subset(u16_resps_raw, FINAL_UNIQUE == 1 & DIFFDIAGDISCH >= 0 & ICD_COMBINED %in% c("C18", "C19", "C20"))$DIFFDIAGDISCH)
-colorectal_mean_u16_nonresp <- mean(subset(u16_nonresps_raw, FINAL_UNIQUE == 1 & DIFFDIAGDISCH >= 0 & ICD_COMBINED %in% c("C18", "C19", "C20"))$DIFFDIAGDISCH)
+colorectal_mean_u16resp <- mean(subset(u16_resps_raw, FINAL_UNIQUE == 1 & DIFFDIAGDISCH >= 0 & ICD_COMBINED %in% c("C18", "C19", "C20"))$DIFFDIAGDISCH)
+colorectal_mean_u16nonresp <- mean(subset(u16_nonresps_raw, FINAL_UNIQUE == 1 & DIFFDIAGDISCH >= 0 & ICD_COMBINED %in% c("C18", "C19", "C20"))$DIFFDIAGDISCH)
 
 
 ##### step 7 - adjusting flags for tumours with more stringent timing rules (see README)
